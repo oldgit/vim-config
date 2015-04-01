@@ -32,6 +32,9 @@ Plugin 'endel/vim-github-colorscheme'
 " visual status line
 Plugin 'bling/vim-airline'
 
+" visual select list and add increment numbers
+Plugin 'VisIncr'
+
 " navigation
 Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
@@ -42,17 +45,40 @@ Plugin 'tpope/vim-unimpaired'
 " switch between file pairs
 Plugin 'derekwyatt/vim-fswitch'
 
+" silver searcher
+Plugin 'rking/ag.vim'
+
+" templating
+Plugin 'drmingdrmer/xptemplate'
+
 " git
 Plugin 'tpope/vim-fugitive'
+
+" undo history
+Plugin 'sjl/gundo.vim'
 
 " languages / file types
 Plugin 'elzr/vim-json'
 Plugin 'derekwyatt/vim-sbt'
 Plugin 'derekwyatt/vim-scala'
+" play2/akka config
+Plugin 'GEverding/vim-hocon'
+
+" vim project file, indexer, util
+Plugin 'DfrankUtil'
+Plugin 'vimprj'
+
+" misc may be called by any of the above?...
+Plugin 'xolox/vim-misc'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+" Add xptemplate global personal directory value
+if has("unix")
+  set runtimepath+=~/.vim/xpt-personal
+endif
 
 " Set filetype stuff to on
 filetype on
@@ -137,6 +163,9 @@ set clipboard+=unnamed
 " Automatically read a file that has changed on disk
 set autoread
 
+" relative line numbering
+set relativenumber
+
 " Make the command-line completion better
 set wildmenu
 
@@ -180,6 +209,19 @@ nmap <silent> ,qq :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . 
 nmap <silent> ,ww :set invwrap<cr>
 nmap <silent> ,wW :windo set invwrap<cr>
 
+" allow command line editing like emacs
+cnoremap <C-A>      <Home>
+cnoremap <C-B>      <Left>
+cnoremap <C-E>      <End>
+cnoremap <C-F>      <Right>
+cnoremap <C-N>      <End>
+cnoremap <C-P>      <Up>
+cnoremap <ESC>b     <S-Left>
+cnoremap <ESC><C-B> <S-Left>
+cnoremap <ESC>f     <S-Right>
+cnoremap <ESC><C-F> <S-Right>
+cnoremap <ESC><C-H> <C-W>
+
 " Maps to make handling windows a bit easier
 noremap <silent> <C-F9>  :vertical resize -10<CR>
 noremap <silent> <C-F10> :resize +10<CR>
@@ -217,6 +259,51 @@ nmap <silent> ,u~ :t.\|s/./\\~/g\|:nohls<cr>
 " Shrink the current window to fit the number of lines in the buffer.  Useful
 " for those buffers that are only a few lines
 nmap <silent> ,sw :execute ":resize " . line('$')<cr>
+
+" Use the bufkill plugin to eliminate a buffer but keep the window layout
+nmap ,bd :BD<cr>
+
+" Make the current file executable
+nmap ,x :w<cr>:!chmod 755 %<cr>:e<cr>
+
+"-----------------------------------------------------------------------------
+" Fugitive
+"-----------------------------------------------------------------------------
+" Thanks to Drew Neil
+autocmd User fugitive
+  \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
+  \  noremap <buffer> .. :edit %:h<cr> |
+  \ endif
+autocmd BufReadPost fugitive://* set bufhidden=delete
+
+nmap ,gs :Gstatus<cr>
+nmap ,ge :Gedit<cr>
+nmap ,gw :Gwrite<cr>
+nmap ,gr :Gread<cr>
+
+"-----------------------------------------------------------------------------
+" NERD Tree Plugin Settings
+"-----------------------------------------------------------------------------
+" Toggle the NERD Tree on an off with F7
+nmap <F7> :NERDTreeToggle<CR>
+
+" Close the NERD Tree with Shift-F7
+nmap <S-F7> :NERDTreeClose<CR>
+
+" Show the bookmarks table on startup
+let NERDTreeShowBookmarks=1
+
+"-----------------------------------------------------------------------------
+" AG (SilverSearcher) Settings
+"-----------------------------------------------------------------------------
+nmap ,sf :AgForCurrentFileDir 
+nmap ,sr :AgForProjectRoot 
+nmap ,se :AgForExtension 
+let g:agprg = '/usr/local/bin/ag'
+let g:ag_results_mapping_replacements = {
+\   'open_and_close': '<cr>',
+\   'open': 'o',
+\ }
 
 "-----------------------------------------------------------------------------
 " CtrlP Settings
@@ -260,4 +347,14 @@ nmap <silent> ,ok :FSAbove<CR>
 nmap <silent> ,oK :FSSplitAbove<CR>
 nmap <silent> ,oj :FSBelow<CR>
 nmap <silent> ,oJ :FSSplitBelow<CR>
+
+"-----------------------------------------------------------------------------
+" XPTemplate settings
+"-----------------------------------------------------------------------------
+let g:xptemplate_brace_complete = ''
+
+"-----------------------------------------------------------------------------
+" Gundo Settings
+"-----------------------------------------------------------------------------
+nmap <c-F5> :GundoToggle<cr>
 
