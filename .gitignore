@@ -1,0 +1,6 @@
+bundle/*
+!bundle/Vundle.vim/
+*.swp
+.netrwhist
+passwords.vim
+tags
