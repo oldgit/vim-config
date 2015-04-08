@@ -35,6 +35,9 @@ Plugin 'bling/vim-airline'
 " visual select list and add increment numbers
 Plugin 'VisIncr'
 
+" align text in columns
+Plugin 'godlygeek/tabular'
+
 " navigation
 Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
@@ -163,7 +166,9 @@ set clipboard+=unnamed
 " Automatically read a file that has changed on disk
 set autoread
 
-" relative line numbering
+" line numbering on
+set number
+" relative line numbering on
 set relativenumber
 
 " Make the command-line completion better
@@ -354,7 +359,7 @@ nmap <silent> ,oJ :FSSplitBelow<CR>
 let g:xptemplate_brace_complete = ''
 
 "-----------------------------------------------------------------------------
-" Gundo Settings
+" Gundo settings
 "-----------------------------------------------------------------------------
-nmap <c-F5> :GundoToggle<cr>
+nmap <F5> :GundoToggle<CR>
 
