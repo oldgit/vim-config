@@ -31,6 +31,8 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'endel/vim-github-colorscheme'
 " visual status line
 Plugin 'bling/vim-airline'
+" rainbow parentheses for javascript, clojure, etc.
+Plugin 'luochen1990/rainbow'
 
 " visual select list and add increment numbers
 Plugin 'VisIncr'
@@ -110,6 +112,8 @@ set backspace=2
 " Solarized
 syntax on
 colorscheme solarized
+" rainbow parentheses off, toggle with :RainbowToggle
+let g:rainbow_active = 0
 
 " set the forward slash to be the slash of note.  Backslashes suck
 set shellslash
