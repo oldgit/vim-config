@@ -35,6 +35,9 @@ Plugin 'bling/vim-airline'
 " visual select list and add increment numbers
 Plugin 'VisIncr'
 
+" highlight trailing white space
+Plugin 'ntpeters/vim-better-whitespace'
+
 " align text in columns
 Plugin 'godlygeek/tabular'
 
@@ -70,6 +73,9 @@ Plugin 'GEverding/vim-hocon'
 " vim project file, indexer, util
 Plugin 'DfrankUtil'
 Plugin 'vimprj'
+
+" seemless tmux vim window navigation
+Plugin 'christoomey/vim-tmux-navigator'
 
 " misc may be called by any of the above?...
 Plugin 'xolox/vim-misc'
@@ -112,9 +118,9 @@ if has("unix")
   set shell=zsh
 else
   set shell=cmd.exe
-endif 
+endif
 
-" Make sure that unsaved buffers that are to be put in the background are 
+" Make sure that unsaved buffers that are to be put in the background are
 " allowed to go in there (ie. the "must save first" error doesn't come up)
 set hidden
 
@@ -204,9 +210,9 @@ nmap <silent> ,md :!mkdir -p %:p:h<CR>
 " Turn off that stupid highlight search
 nmap <silent> ,n :nohls<CR>
 
-" The following beast is something i didn't write... it will return the 
+" The following beast is something i didn't write... it will return the
 " syntax highlighting group that the current "thing" under the cursor
-" belongs to -- very useful for figuring out what to change as far as 
+" belongs to -- very useful for figuring out what to change as far as
 " syntax highlighting goes.
 nmap <silent> ,qq :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
@@ -219,7 +225,7 @@ cnoremap <C-A>      <Home>
 cnoremap <C-B>      <Left>
 cnoremap <C-E>      <End>
 cnoremap <C-F>      <Right>
-cnoremap <C-N>      <End>
+cnoremap <C-N>      <Down>
 cnoremap <C-P>      <Up>
 cnoremap <ESC>b     <S-Left>
 cnoremap <ESC><C-B> <S-Left>
@@ -301,9 +307,10 @@ let NERDTreeShowBookmarks=1
 "-----------------------------------------------------------------------------
 " AG (SilverSearcher) Settings
 "-----------------------------------------------------------------------------
-nmap ,sf :AgForCurrentFileDir 
-nmap ,sr :AgForProjectRoot 
-nmap ,se :AgForExtension 
+nmap ,sf :AgForCurrentFileDir
+nmap ,sr :AgForProjectRoot
+nmap ,se :AgForExtension
+
 let g:agprg = '/usr/local/bin/ag'
 let g:ag_results_mapping_replacements = {
 \   'open_and_close': '<cr>',
