@@ -15,6 +15,21 @@ function! RunningInsideGit()
   endif
 endfunction
 
+function! FindGitDirOrRoot()
+  let filedir = expand('%:p:h')
+  if isdirectory(filedir)
+    let cmd = 'bash -c "(cd ' . filedir . '; git rev-parse --show-toplevel 2>/dev/null)"'
+    let gitdir = system(cmd)
+    if strlen(gitdir) == 0
+      return '/'
+    else
+      return gitdir[:-2] " chomp
+    endif
+  else
+    return '/'
+  endif
+endfunction
+
 " ---- Vundle plugins ----
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -30,7 +45,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'endel/vim-github-colorscheme'
 " visual status line
-Plugin 'bling/vim-airline'
+Plugin 'itchyny/lightline.vim'
 " rainbow parentheses for javascript, clojure, etc.
 Plugin 'luochen1990/rainbow'
 
@@ -115,6 +130,26 @@ colorscheme solarized
 " rainbow parentheses off, toggle with :RainbowToggle
 let g:rainbow_active = 0
 
+let g:lightline = {
+      \ 'colorscheme': 'solarized',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component': {
+      \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
+      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+      \ },
+      \ 'component_visible_condition': {
+      \   'readonly': '(&filetype!="help"&& &readonly)',
+      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+      \ },
+      \ 'separator': { 'left': '⮀', 'right': '⮂' },
+      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+      \ }
+
 " set the forward slash to be the slash of note.  Backslashes suck
 set shellslash
 
@@ -178,6 +213,7 @@ set autoread
 
 " line numbering on
 set number
+set relativenumber
 
 " Make the command-line completion better
 set wildmenu
@@ -194,6 +230,12 @@ set ambiwidth=double
 set nobackup
 set nowritebackup
 set noswapfile
+
+" Let the syntax highlighting for Java files allow cpp keywords
+let java_allow_cpp_keywords = 1
+
+" I don't want to have the default keymappings for my scala plugin evaluated
+let g:scala_use_default_keymappings = 0
 
 " leader key
 let mapleader = ','
@@ -309,10 +351,14 @@ let NERDTreeShowBookmarks=1
 "-----------------------------------------------------------------------------
 " AG (SilverSearcher) Settings
 "-----------------------------------------------------------------------------
-nmap ,sf :AgForCurrentFileDir
-nmap ,sr :AgForProjectRoot
-nmap ,se :AgForExtension
+function! AgProjectRoot(pattern)
+  let dir = FindGitDirOrRoot()
+  execute ':Ag ' . a:pattern . ' ' . dir
+endfunction
 
+command! -nargs=+ AgProjectRoot call AgProjectRoot(<q-args>)
+
+nmap ,sr :AgForProjectRoot
 let g:agprg = '/usr/local/bin/ag'
 let g:ag_results_mapping_replacements = {
 \   'open_and_close': '<cr>',
