@@ -178,8 +178,6 @@ set autoread
 
 " line numbering on
 set number
-" relative line numbering on
-set relativenumber
 
 " Make the command-line completion better
 set wildmenu
