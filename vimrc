@@ -353,6 +353,12 @@ nmap <S-F7> :NERDTreeClose<CR>
 let NERDTreeShowBookmarks=1
 
 "-----------------------------------------------------------------------------
+" Notes Plugin Settings
+"-----------------------------------------------------------------------------
+let g:notes_directories  = ['~/Dropbox/vim-notes']
+let g:notes_suffix = '.txt'
+
+"-----------------------------------------------------------------------------
 " AG (SilverSearcher) Settings
 "-----------------------------------------------------------------------------
 function! AgProjectRoot(pattern)
