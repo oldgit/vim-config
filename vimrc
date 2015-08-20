@@ -77,6 +77,10 @@ Plugin 'drmingdrmer/xptemplate'
 " git
 Plugin 'tpope/vim-fugitive'
 
+" notes
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-notes'
+
 " undo history
 Plugin 'sjl/gundo.vim'
 
@@ -93,9 +97,6 @@ Plugin 'vimprj'
 
 " seemless tmux vim window navigation
 Plugin 'christoomey/vim-tmux-navigator'
-
-" misc may be called by any of the above?...
-Plugin 'xolox/vim-misc'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
