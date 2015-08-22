@@ -77,9 +77,8 @@ Plugin 'drmingdrmer/xptemplate'
 " git
 Plugin 'tpope/vim-fugitive'
 
-" notes
+" misc - may need this...
 Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-notes'
 
 " undo history
 Plugin 'sjl/gundo.vim'
@@ -351,12 +350,6 @@ nmap <S-F7> :NERDTreeClose<CR>
 
 " Show the bookmarks table on startup
 let NERDTreeShowBookmarks=1
-
-"-----------------------------------------------------------------------------
-" Notes Plugin Settings
-"-----------------------------------------------------------------------------
-let g:notes_directories  = ['~/Dropbox/vim-notes']
-let g:notes_suffix = '.txt'
 
 "-----------------------------------------------------------------------------
 " AG (SilverSearcher) Settings
