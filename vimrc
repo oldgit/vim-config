@@ -80,6 +80,9 @@ Plugin 'tpope/vim-fugitive'
 " misc - may need this...
 Plugin 'xolox/vim-misc'
 
+" vimwiki
+Plugin 'vimwiki/vimwiki'
+
 " undo history
 Plugin 'sjl/gundo.vim'
 
@@ -264,8 +267,8 @@ nmap <silent> ,n :nohls<CR>
 nmap <silent> ,qq :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 " set text wrapping toggles
-nmap <silent> ,ww :set invwrap<cr>
-nmap <silent> ,wW :windo set invwrap<cr>
+nmap <silent> ,jw :set invwrap<cr>
+nmap <silent> ,jW :windo set invwrap<cr>
 
 " allow command line editing like emacs
 cnoremap <C-A>      <Home>
@@ -421,3 +424,7 @@ let g:xptemplate_brace_complete = ''
 "-----------------------------------------------------------------------------
 nmap <F5> :GundoToggle<CR>
 
+"-----------------------------------------------------------------------------
+" vimwiki settings
+"-----------------------------------------------------------------------------
+let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
