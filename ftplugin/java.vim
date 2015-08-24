@@ -1,14 +1,3 @@
-Skip to content
-Sign up Sign in This repository
-Explore
-Features
-Enterprise
-Blog
- Watch 24  Star 309  Fork 62 derekwyatt/vim-config
- branch: master vim-config/ftplugin/java.vim
-@derekwyattderekwyatt on Sep 17, 2012 Many changes in the new job
-1 contributor
-RawBlameHistory     71 lines (67 sloc)  3.072 kb
 setlocal formatoptions=crq
 setlocal textwidth=80
 setlocal foldmethod=marker
@@ -79,3 +68,4 @@ nmap <buffer> <silent> ,ok :JavaSwitchAbove<cr>
 nmap <buffer> <silent> ,oK :JavaSwitchSplitAbove<cr>
 nmap <buffer> <silent> ,oj :JavaSwitchBelow<cr>
 nmap <buffer> <silent> ,oJ :JavaSwitchSplitBelow<cr>
+
