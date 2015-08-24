@@ -77,11 +77,11 @@ Plugin 'drmingdrmer/xptemplate'
 " git
 Plugin 'tpope/vim-fugitive'
 
+" markdown
+Plugin 'gabrielelana/vim-markdown'
+
 " misc - may need this...
 Plugin 'xolox/vim-misc'
-
-" vimwiki
-Plugin 'vimwiki/vimwiki'
 
 " undo history
 Plugin 'sjl/gundo.vim'
@@ -424,7 +424,3 @@ let g:xptemplate_brace_complete = ''
 "-----------------------------------------------------------------------------
 nmap <F5> :GundoToggle<CR>
 
-"-----------------------------------------------------------------------------
-" vimwiki settings
-"-----------------------------------------------------------------------------
-let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
