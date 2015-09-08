@@ -52,6 +52,9 @@ Plugin 'luochen1990/rainbow'
 " visual select list and add increment numbers
 Plugin 'VisIncr'
 
+" improved bracket/element match
+Plugin 'matchit.zip'
+
 " highlight trailing white space
 Plugin 'ntpeters/vim-better-whitespace'
 
@@ -92,6 +95,9 @@ Plugin 'derekwyatt/vim-sbt'
 Plugin 'derekwyatt/vim-scala'
 " play2/akka config
 Plugin 'GEverding/vim-hocon'
+" emmet for HTML + CSS
+
+Plugin 'mattn/emmet-vim'
 
 " vim project file, indexer, util
 Plugin 'DfrankUtil'
@@ -107,6 +113,10 @@ filetype plugin indent on    " required
 " Add xptemplate global personal directory value
 if has("unix")
   set runtimepath+=~/.vim/xpt-personal
+endif
+
+if has('gui_running')
+  set guifont=SourceCodePro-Regular:h14
 endif
 
 " Set filetype stuff to on
@@ -384,7 +394,8 @@ let g:ctrlp_custom_ignore .= '%(git|hg|svn)|'
 let g:ctrlp_custom_ignore .= '\.%(class|o|png|jpg|jpeg|bmp|tar|jar|tgz|deb|zip|xml|html)$|'
 let g:ctrlp_custom_ignore .= '/target/%(quickfix|resolution-cache|streams)|'
 let g:ctrlp_custom_ignore .= '/target/scala-2.1./%(classes|test-classes|sbt-0.13|cache)|'
-let g:ctrlp_custom_ignore .= '/project/target|/project/project'
+let g:ctrlp_custom_ignore .= '/project/target|/project/project|'
+let g:ctrlp_custom_ignore .= '/_site'
 let g:ctrlp_custom_ignore .= ')'
 let g:ctrlp_open_new_file = 'r'
 let g:ctrlp_open_multiple_files = '1ri'
