@@ -435,3 +435,9 @@ let g:xptemplate_brace_complete = ''
 "-----------------------------------------------------------------------------
 nmap <F5> :GundoToggle<CR>
 
+"-----------------------------------------------------------------------------
+" Omnicomplete settings
+"-----------------------------------------------------------------------------
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
