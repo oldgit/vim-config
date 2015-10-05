@@ -96,9 +96,7 @@ Plugin 'derekwyatt/vim-scala'
 " play2/akka config
 Plugin 'GEverding/vim-hocon'
 " emmet for HTML + CSS
-
 Plugin 'mattn/emmet-vim'
-
 " vim project file, indexer, util
 Plugin 'DfrankUtil'
 Plugin 'vimprj'
