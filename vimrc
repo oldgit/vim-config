@@ -93,6 +93,7 @@ Plugin 'sjl/gundo.vim'
 Plugin 'elzr/vim-json'
 Plugin 'derekwyatt/vim-sbt'
 Plugin 'derekwyatt/vim-scala'
+Plugin 'pangloss/vim-javascript'
 " play2/akka config
 Plugin 'GEverding/vim-hocon'
 " emmet for HTML + CSS
@@ -100,6 +101,9 @@ Plugin 'mattn/emmet-vim'
 " vim project file, indexer, util
 Plugin 'DfrankUtil'
 Plugin 'vimprj'
+
+" syntax linting
+Plugin 'scrooloose/syntastic'
 
 " seemless tmux vim window navigation
 Plugin 'christoomey/vim-tmux-navigator'
@@ -140,6 +144,18 @@ syntax on
 colorscheme solarized
 " rainbow parentheses off, toggle with :RainbowToggle
 let g:rainbow_active = 0
+
+" syntastic setup
+set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
+" JS eslint switch on
+let g:syntastic_javascript_checkers = ['eslint']
 
 let g:lightline = {
       \ 'colorscheme': 'solarized',
@@ -390,6 +406,7 @@ let g:ctrlp_custom_ignore = '\v'
 let g:ctrlp_custom_ignore .= '%(/\.'
 let g:ctrlp_custom_ignore .= '%(git|hg|svn)|'
 let g:ctrlp_custom_ignore .= '\.%(class|o|png|jpg|jpeg|bmp|tar|jar|tgz|deb|zip|xml|html)$|'
+let g:ctrlp_custom_ignore .= '/node_modules|'
 let g:ctrlp_custom_ignore .= '/target|'
 let g:ctrlp_custom_ignore .= '/node_modules|'
 " let g:ctrlp_custom_ignore .= '/target/%(quickfix|resolution-cache|streams)|'
