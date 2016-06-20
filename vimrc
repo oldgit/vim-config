@@ -76,7 +76,7 @@ Plug 'derekwyatt/vim-fswitch'
 Plug 'rking/ag.vim'
 
 " templating
-Plug 'drmingdrmer/xptemplate'
+" Plug 'drmingdrmer/xptemplate'
 
 " git
 Plug 'tpope/vim-fugitive'
@@ -398,8 +398,8 @@ let g:ctrlp_custom_ignore .= '\.%(class|o|png|jpg|jpeg|bmp|tar|jar|tgz|deb|zip|x
 let g:ctrlp_custom_ignore .= '/node_modules|'
 let g:ctrlp_custom_ignore .= '/target|'
 let g:ctrlp_custom_ignore .= '/node_modules|'
-" let g:ctrlp_custom_ignore .= '/target/%(quickfix|resolution-cache|streams)|'
-" let g:ctrlp_custom_ignore .= '/target/scala-2.1./%(classes|test-classes|sbt-0.13|cache)|'
+let g:ctrlp_custom_ignore .= '/target/%(quickfix|resolution-cache|streams)|'
+let g:ctrlp_custom_ignore .= '/target/scala-2.1./%(classes|test-classes|sbt-0.13|cache)|'
 let g:ctrlp_custom_ignore .= '/project/target|/project/project|'
 let g:ctrlp_custom_ignore .= '/_site'
 let g:ctrlp_custom_ignore .= ')'
@@ -434,7 +434,7 @@ nmap <silent> ,oJ :FSSplitBelow<CR>
 "-----------------------------------------------------------------------------
 " XPTemplate settings
 "-----------------------------------------------------------------------------
-let g:xptemplate_brace_complete = ''
+" let g:xptemplate_brace_complete = ''
 
 "-----------------------------------------------------------------------------
 " Gundo settings
