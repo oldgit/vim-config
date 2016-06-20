@@ -30,87 +30,87 @@ function! FindGitDirOrRoot()
   endif
 endfunction
 
-" ---- Vundle plugins ----
 set nocompatible              " be iMproved, required
-filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set runtimepath+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" ---- Vim Plug install if necessary ----
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source ~/.vimrc
+endif
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+" ---- Vim Plug plugins ----
+call plug#begin('~/.vim/plugged')
 
 " visual themes
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'endel/vim-github-colorscheme'
+Plug 'altercation/vim-colors-solarized'
+Plug 'endel/vim-github-colorscheme'
 " visual status line
-Plugin 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim'
 " rainbow parentheses for javascript, clojure, etc.
-Plugin 'luochen1990/rainbow'
+Plug 'luochen1990/rainbow'
 
 " visual select list and add increment numbers
-Plugin 'VisIncr'
+Plug 'VisIncr'
 
 " improved bracket/element match
-Plugin 'matchit.zip'
+Plug 'matchit.zip'
 
 " highlight trailing white space
-Plugin 'ntpeters/vim-better-whitespace'
+Plug 'ntpeters/vim-better-whitespace'
 
 " align text in columns
-Plugin 'godlygeek/tabular'
+Plug 'godlygeek/tabular'
 
 " navigation
-Plugin 'scrooloose/nerdtree'
-Plugin 'kien/ctrlp.vim'
-Plugin 'bufkill.vim'
-Plugin 'EasyMotion'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
+Plug 'scrooloose/nerdtree'
+Plug 'kien/ctrlp.vim'
+Plug 'bufkill.vim'
+Plug 'EasyMotion'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
 " switch between file pairs
-Plugin 'derekwyatt/vim-fswitch'
+Plug 'derekwyatt/vim-fswitch'
 
 " silver searcher
-Plugin 'rking/ag.vim'
+Plug 'rking/ag.vim'
 
 " templating
-Plugin 'drmingdrmer/xptemplate'
+Plug 'drmingdrmer/xptemplate'
 
 " git
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
 " markdown
-Plugin 'gabrielelana/vim-markdown'
+Plug 'gabrielelana/vim-markdown'
 
 " misc - may need this...
-Plugin 'xolox/vim-misc'
+Plug 'xolox/vim-misc'
 
 " undo history
-Plugin 'sjl/gundo.vim'
+Plug 'sjl/gundo.vim'
 
 " languages / file types
-Plugin 'elzr/vim-json'
-Plugin 'derekwyatt/vim-sbt'
-Plugin 'derekwyatt/vim-scala'
-Plugin 'pangloss/vim-javascript'
+Plug 'elzr/vim-json'
+Plug 'derekwyatt/vim-sbt'
+Plug 'derekwyatt/vim-scala'
+Plug 'pangloss/vim-javascript'
 " play2/akka config
-Plugin 'GEverding/vim-hocon'
+Plug 'GEverding/vim-hocon'
 " emmet for HTML + CSS
-Plugin 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'
 " vim project file, indexer, util
-Plugin 'DfrankUtil'
-Plugin 'vimprj'
+Plug 'DfrankUtil'
+Plug 'vimprj'
 
 " syntax linting
-Plugin 'scrooloose/syntastic'
+Plug 'neomake/neomake'
 
 " seemless tmux vim window navigation
-Plugin 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-navigator'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+" All of your Plugs must be added before the following line
+call plug#end()
 
 " Add xptemplate global personal directory value
 if has("unix")
@@ -120,11 +120,6 @@ endif
 if has('gui_running')
   set guifont=SourceCodePro-Regular:h14
 endif
-
-" Set filetype stuff to on
-filetype on
-filetype plugin on
-filetype indent on
 
 " Tabstops are 2 spaces
 set tabstop=2
@@ -140,22 +135,16 @@ set vb
 set backspace=2
 
 " Solarized
-syntax on
+syntax enable
+set background=light
 colorscheme solarized
 " rainbow parentheses off, toggle with :RainbowToggle
 let g:rainbow_active = 0
 
-" syntastic setup
-set statusline+=%#warningmsg#
-    set statusline+=%{SyntasticStatuslineFlag()}
-    set statusline+=%*
-
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_auto_loc_list = 1
-    let g:syntastic_check_on_open = 1
-    let g:syntastic_check_on_wq = 0
-" JS eslint switch on
-let g:syntastic_javascript_checkers = ['eslint']
+" Switch on linters on buffer open, save
+let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_json_enabled_makers = ['jsonlint']
+autocmd! BufWritePost,BufEnter * Neomake
 
 let g:lightline = {
       \ 'colorscheme': 'solarized',
@@ -458,3 +447,13 @@ nmap <F5> :GundoToggle<CR>
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+
+"-----------------------------------------------------------------------------
+" neomake mappings
+"-----------------------------------------------------------------------------
+nmap <Leader><Space>o :lopen<CR>      " open location window
+nmap <Leader><Space>c :lclose<CR>     " close location window
+nmap <Leader><Space>, :ll<CR>         " go to current error/warning
+nmap <Leader><Space>n :lnext<CR>      " next error/warning
+nmap <Leader><Space>p :lprev<CR>      " previous error/warning
+
