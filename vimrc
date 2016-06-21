@@ -106,6 +106,13 @@ Plug 'vimprj'
 " syntax linting
 Plug 'neomake/neomake'
 
+" neo autocomplete with tern
+function! DoRemote(arg)
+  UpdateRemotePlugins
+endfunction
+Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+
 " seemless tmux vim window navigation
 Plug 'christoomey/vim-tmux-navigator'
 
@@ -322,8 +329,8 @@ nmap <silent> ,ev :e $MYVIMRC<CR>
 nmap <silent> ,sv :so $MYVIMRC<CR>
 
 " Make horizontal scrolling easier
-nmap <silent> <C-o> 10zl
-nmap <silent> <C-i> 10zh
+" nmap <silent> <C-o> 10zl
+" nmap <silent> <C-i> 10zh
 
 " Underline the current line with '='
 nmap <silent> ,u= :t.\|s/./=/g\|:nohls<cr>
@@ -444,9 +451,19 @@ nmap <F5> :GundoToggle<CR>
 "-----------------------------------------------------------------------------
 " Omnicomplete settings
 "-----------------------------------------------------------------------------
+let g:deoplete#enable_at_startup = 1
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+filetype plugin on
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+" tern
+if exists('g:plugs["tern_for_vim"]')
+  let g:tern_show_argument_hints = 'on_hold'
+  let g:tern_show_signature_in_pum = 1
+  autocmd FileType javascript setlocal omnifunc=tern#Complete
+endif
 
 "-----------------------------------------------------------------------------
 " neomake mappings
