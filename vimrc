@@ -150,9 +150,16 @@ colorscheme solarized
 " rainbow parentheses off, toggle with :RainbowToggle
 let g:rainbow_active = 0
 
+" Create xmllint maker
+let g:neomake_xml_xmllint_maker = {
+    \ 'exe': 'xmllint',
+    \ 'args': ['--format'],
+    \ 'errorformat': '%A%f:%l:\ %m,%-Z%p^,%-C%.%#'
+    \ }
 " Switch on linters on buffer open, save
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_json_enabled_makers = ['jsonlint']
+let g:neomake_xml_enabled_makers = ['xmllint']
 autocmd! BufWritePost,BufEnter * Neomake
 
 let g:lightline = {
@@ -423,7 +430,7 @@ let g:deoplete#enable_at_startup = 1
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 filetype plugin on
-autocmd Filetype groovy setlocal ts=4 sts=4 sw=4
+autocmd FileType groovy setlocal ts=4 sts=4 sw=4
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
