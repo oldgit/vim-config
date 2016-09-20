@@ -92,11 +92,7 @@ Plug 'xolox/vim-misc'
 Plug 'sjl/gundo.vim'
 
 " languages / file types
-Plug 'lambdatoast/elm.vim'
-Plug 'elzr/vim-json'
-Plug 'derekwyatt/vim-sbt'
-Plug 'derekwyatt/vim-scala'
-Plug 'pangloss/vim-javascript'
+Plug 'sheerun/vim-polyglot'
 " play2/akka config
 Plug 'GEverding/vim-hocon'
 " emmet for HTML + CSS
