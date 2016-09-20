@@ -64,13 +64,14 @@ Plug 'godlygeek/tabular'
 
 " navigation
 Plug 'scrooloose/nerdtree'
-Plug 'kien/ctrlp.vim'
 Plug 'bufkill.vim'
 Plug 'EasyMotion'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 " switch between file pairs
 Plug 'derekwyatt/vim-fswitch'
+Plug 'Shougo/neomru.vim'
+Plug 'Shougo/denite.nvim'
 
 " silver searcher
 Plug 'rking/ag.vim'
@@ -91,6 +92,7 @@ Plug 'xolox/vim-misc'
 Plug 'sjl/gundo.vim'
 
 " languages / file types
+Plug 'lambdatoast/elm.vim'
 Plug 'elzr/vim-json'
 Plug 'derekwyatt/vim-sbt'
 Plug 'derekwyatt/vim-scala'
@@ -392,40 +394,6 @@ let g:ag_results_mapping_replacements = {
 \ }
 
 "-----------------------------------------------------------------------------
-" CtrlP Settings
-"-----------------------------------------------------------------------------
-let g:ctrlp_switch_buffer = 'E'
-let g:ctrlp_tabpage_position = 'c'
-let g:ctrlp_working_path_mode = 'rc'
-let g:ctrlp_root_markers = ['.project.root']
-let g:ctrlp_custom_ignore = '\v'
-let g:ctrlp_custom_ignore .= '%(/\.'
-let g:ctrlp_custom_ignore .= '%(git|hg|svn)|'
-let g:ctrlp_custom_ignore .= '\.%(class|o|png|jpg|jpeg|bmp|tar|jar|tgz|deb|zip|xml|html)$|'
-let g:ctrlp_custom_ignore .= '/node_modules|'
-let g:ctrlp_custom_ignore .= '/target|'
-let g:ctrlp_custom_ignore .= '/node_modules|'
-let g:ctrlp_custom_ignore .= '/target/%(quickfix|resolution-cache|streams)|'
-let g:ctrlp_custom_ignore .= '/target/scala-2.1./%(classes|test-classes|sbt-0.13|cache)|'
-let g:ctrlp_custom_ignore .= '/project/target|/project/project|'
-let g:ctrlp_custom_ignore .= '/_site'
-let g:ctrlp_custom_ignore .= ')'
-let g:ctrlp_open_new_file = 'r'
-let g:ctrlp_open_multiple_files = '1ri'
-let g:ctrlp_match_window = 'max:40'
-let g:ctrlp_prompt_mappings = {
-  \ 'PrtSelectMove("j")':   ['<c-n>'],
-  \ 'PrtSelectMove("k")':   ['<c-p>'],
-  \ 'PrtHistory(-1)':       ['<c-j>', '<down>'],
-  \ 'PrtHistory(1)':        ['<c-i>', '<up>']
-\ }
-nmap ,fb :CtrlPBuffer<cr>
-nmap ,ff :CtrlP .<cr>
-nmap ,fF :execute ":CtrlP " . expand('%:p:h')<cr>
-nmap ,fr :CtrlP<cr>
-nmap ,fm :CtrlPMixed<cr>
-
-"-----------------------------------------------------------------------------
 " FSwitch mappings
 "-----------------------------------------------------------------------------
 nmap <silent> ,of :FSHere<CR>
@@ -455,6 +423,7 @@ let g:deoplete#enable_at_startup = 1
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 filetype plugin on
+autocmd Filetype groovy setlocal ts=4 sts=4 sw=4
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
@@ -475,4 +444,19 @@ nmap <Leader><Space>c :lclose<CR>     " close location window
 nmap <Leader><Space>, :ll<CR>         " go to current error/warning
 nmap <Leader><Space>n :lnext<CR>      " next error/warning
 nmap <Leader><Space>p :lprev<CR>      " previous error/warning
+
+"-----------------------------------------------------------------------------
+" Denite Settings
+"-----------------------------------------------------------------------------
+" Change file_rec command.
+	call denite#custom#var('file_rec', 'command',
+	\ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+" Change grep command.
+	call denite#custom#var('grep', 'command',
+	\ ['ag', '--vimgrep'])
+" Key mapped to ctrlp
+nnoremap <C-p> :Denite file_rec<cr>
+nmap ,ff :Denite file_rec<cr>
+nmap ,fr :Denite file_mru<cr>
+nmap ,fg :Denite grep<cr>
 
