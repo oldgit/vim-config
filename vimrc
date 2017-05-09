@@ -51,10 +51,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'luochen1990/rainbow'
 
 " visual select list and add increment numbers
-Plug 'VisIncr'
-
-" improved bracket/element match
-Plug 'matchit.zip'
+Plug 'iiey/visincr'
 
 " highlight trailing white space
 Plug 'ntpeters/vim-better-whitespace'
@@ -64,8 +61,8 @@ Plug 'godlygeek/tabular'
 
 " navigation
 Plug 'scrooloose/nerdtree'
-Plug 'bufkill.vim'
-Plug 'EasyMotion'
+Plug 'qpkorr/vim-bufkill'
+Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 " switch between file pairs
@@ -97,9 +94,6 @@ Plug 'sheerun/vim-polyglot'
 Plug 'GEverding/vim-hocon'
 " emmet for HTML + CSS
 Plug 'mattn/emmet-vim'
-" vim project file, indexer, util
-Plug 'DfrankUtil'
-Plug 'vimprj'
 
 " syntax linting
 Plug 'neomake/neomake'
@@ -193,7 +187,7 @@ set hidden
 
 " Make the 'cw' and like commands put a $ at the end instead of just deleting
 " the text and replacing it
-set cpoptions=ces$
+set cpoptions+=$
 
 " tell VIM to always put a status line in, even if there is only one window
 set laststatus=2
