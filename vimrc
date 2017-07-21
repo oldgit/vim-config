@@ -63,12 +63,20 @@ Plug 'godlygeek/tabular'
 Plug 'scrooloose/nerdtree'
 Plug 'qpkorr/vim-bufkill'
 Plug 'easymotion/vim-easymotion'
-Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 " switch between file pairs
 Plug 'derekwyatt/vim-fswitch'
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/denite.nvim'
+
+" clojure syntax
+Plug 'guns/vim-clojure-static'
+Plug 'guns/vim-sexp'
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+" clojure cider-nrepl
+Plug 'tpope/vim-fireplace'
 
 " silver searcher
 Plug 'rking/ag.vim'
@@ -137,6 +145,7 @@ set backspace=2
 syntax enable
 set background=light
 colorscheme solarized
+
 " rainbow parentheses off, toggle with :RainbowToggle
 let g:rainbow_active = 0
 
@@ -146,6 +155,7 @@ let g:neomake_xml_xmllint_maker = {
     \ 'args': ['--format'],
     \ 'errorformat': '%A%f:%l:\ %m,%-Z%p^,%-C%.%#'
     \ }
+
 " Switch on linters on buffer open, save
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_json_enabled_makers = ['jsonlint']
@@ -345,6 +355,12 @@ nmap ,bd :BD<cr>
 
 " Make the current file executable
 nmap ,x :w<cr>:!chmod 755 %<cr>:e<cr>
+
+"-----------------------------------------------------------------------------
+" Neovim terminal
+"-----------------------------------------------------------------------------
+" map <Esc> to exit terminal mode:
+:tnoremap <Esc> <C-\><C-n>
 
 "-----------------------------------------------------------------------------
 " Fugitive
