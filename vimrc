@@ -43,7 +43,7 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " visual themes
-Plug 'altercation/vim-colors-solarized'
+Plug 'lifepillar/vim-solarized8'
 Plug 'endel/vim-github-colorscheme'
 " visual status line
 Plug 'itchyny/lightline.vim'
@@ -142,9 +142,9 @@ set vb
 set backspace=2
 
 " Solarized
+set termguicolors
 syntax enable
-set background=light
-colorscheme solarized
+colorscheme solarized8_dark
 
 " rainbow parentheses off, toggle with :RainbowToggle
 let g:rainbow_active = 0
