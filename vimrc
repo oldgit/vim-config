@@ -144,7 +144,7 @@ set backspace=2
 " Solarized
 set termguicolors
 syntax enable
-colorscheme solarized8_dark
+colorscheme solarized8_light
 
 " rainbow parentheses off, toggle with :RainbowToggle
 let g:rainbow_active = 0
