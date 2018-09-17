@@ -106,11 +106,13 @@ Plug 'mattn/emmet-vim'
 " syntax linting
 Plug 'neomake/neomake'
 
+" Java Development
+Plug 'majutsushi/tagbar'
+Plug 'sbdchd/neoformat'
+Plug 'artur-shaik/vim-javacomplete2'
+
 " neo autocomplete with tern
-function! DoRemote(arg)
-  UpdateRemotePlugins
-endfunction
-Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 
 " seemless tmux vim window navigation
@@ -430,9 +432,18 @@ nmap <silent> ,oJ :FSSplitBelow<CR>
 nmap <F5> :GundoToggle<CR>
 
 "-----------------------------------------------------------------------------
-" Omnicomplete settings
+" deoplete settings
 "-----------------------------------------------------------------------------
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#omni_patterns = {}
+let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
+let g:deoplete#sources = {}
+let g:deoplete#sources._ = []
+let g:deoplete#file#enable_buffer_path = 1
+
+"-----------------------------------------------------------------------------
+" Omnicomplete settings
+"-----------------------------------------------------------------------------
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 filetype plugin on
@@ -440,6 +451,8 @@ autocmd FileType groovy setlocal ts=4 sts=4 sw=4
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
 " tern
 if exists('g:plugs["tern_for_vim"]')
   let g:tern_map_keys = 1
@@ -452,11 +465,20 @@ endif
 "-----------------------------------------------------------------------------
 " neomake mappings
 "-----------------------------------------------------------------------------
+autocmd! BufWritePost,BufEnter * Neomake
 nmap <Leader><Space>o :lopen<CR>      " open location window
 nmap <Leader><Space>c :lclose<CR>     " close location window
 nmap <Leader><Space>, :ll<CR>         " go to current error/warning
 nmap <Leader><Space>n :lnext<CR>      " next error/warning
 nmap <Leader><Space>p :lprev<CR>      " previous error/warning
+
+"-----------------------------------------------------------------------------
+" neomake mappings
+"-----------------------------------------------------------------------------
+augroup astyle
+  autocmd!
+  autocmd BufWritePre * Neoformat
+augroup END
 
 "-----------------------------------------------------------------------------
 " Denite Settings
