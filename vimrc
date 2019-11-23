@@ -146,7 +146,8 @@ set backspace=2
 " Solarized
 set termguicolors
 syntax enable
-colorscheme solarized8_light
+set background=light
+colorscheme solarized8
 
 " rainbow parentheses off, toggle with :RainbowToggle
 let g:rainbow_active = 0
@@ -483,15 +484,44 @@ augroup END
 "-----------------------------------------------------------------------------
 " Denite Settings
 "-----------------------------------------------------------------------------
-" Change file_rec command.
-	call denite#custom#var('file_rec', 'command',
-	\ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+" Change file/rec command.
+call denite#custom#var('file/rec', 'command',
+      \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
 " Change grep command.
-	call denite#custom#var('grep', 'command',
-	\ ['ag', '--vimgrep'])
-" Key mapped to ctrlp
-nnoremap <C-p> :Denite file_rec<cr>
-nmap ,ff :Denite file_rec<cr>
-nmap ,fr :Denite file_mru<cr>
-nmap ,fg :Denite grep<cr>
+call denite#custom#var('grep', 'command', ['ag'])
+call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', [])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
 
+autocmd FileType denite call s:denite_settings()
+
+function! s:denite_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+        \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> <C-v>
+        \ denite#do_map('do_action', 'vsplit')
+  nnoremap <silent><buffer><expr> d
+        \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> p
+        \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> <Esc>
+        \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> q
+        \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i
+        \ denite#do_map('open_filter_buffer')
+endfunction
+
+autocmd FileType denite-filter call s:denite_filter_settings()
+
+function! s:denite_filter_settings() abort
+  nmap <silent><buffer> <Esc> <Plug>(denite_filter_quit)
+endfunction
+
+" Key mapped to ctrlp
+nnoremap <C-p> :Denite file/rec<cr>
+nmap ,ff :Denite file/rec<cr>
+nmap ,fb :Denite buffer<cr>
+nmap ,fg :Denite grep<cr>
