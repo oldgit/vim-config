@@ -5,15 +5,23 @@
 "-----------------------------------------------------------------------------
 " Global Stuff
 "-----------------------------------------------------------------------------
+"
 
-function! RunningInsideGit()
-  let result = system('env | grep ^GIT_')
-  if result == ""
-    return 0
+" Set global os variable for operating system
+if !exists("g:os")
+  if has("win64") || has("win32") || has("win16")
+    let g:os = "Windows"
   else
-    return 1
+    let g:os = substitute(system('uname'), '\n', '', '')
+    if "Linux" =~ g:os
+      let g:os = substitute(system('cat /etc/issue'), ' .*$', '', '')
+    endif
   endif
-endfunction
+endif
+
+if "Debian" =~ g:os
+  runtime! debian.vim
+endif
 
 function! FindGitDirOrRoot()
   let filedir = expand('%:p:h')
@@ -40,7 +48,11 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 " ---- Vim Plug plugins ----
-call plug#begin('~/.vim/plugged')
+if has("nvim")
+  call plug#begin('~/.local/share/nvim/plugged')
+else
+  call plug#begin('~/.vim/plugged')
+endif
 
 " visual themes
 Plug 'lifepillar/vim-solarized8'
@@ -88,7 +100,7 @@ Plug 'rking/ag.vim'
 Plug 'tpope/vim-fugitive'
 
 " markdown
-Plug 'gabrielelana/vim-markdown'
+Plug 'plasticboy/vim-markdown'
 
 " misc - may need this...
 Plug 'xolox/vim-misc'
@@ -144,7 +156,11 @@ set vb
 set backspace=2
 
 " Solarized
-set termguicolors
+if "Debian" =~ g:os
+  let g:solarized_use16 = 1
+else
+  set termguicolors
+endif
 syntax enable
 set background=light
 colorscheme solarized8
@@ -431,6 +447,11 @@ nmap <silent> ,oJ :FSSplitBelow<CR>
 " Gundo settings
 "-----------------------------------------------------------------------------
 nmap <F5> :GundoToggle<CR>
+
+"-----------------------------------------------------------------------------
+" markdown settings
+"-----------------------------------------------------------------------------
+let g:vim_markdown_folding_disabled = 1
 
 "-----------------------------------------------------------------------------
 " deoplete settings
