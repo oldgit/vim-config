@@ -22,6 +22,9 @@ if "Debian" =~ g:os
   runtime! debian.vim
 endif
 
+" Explicitly set python3 binary
+let g:python3_host_prog = '/usr/local/bin/python3'
+
 function! FindGitDirOrRoot()
   let filedir = expand('%:p:h')
   if isdirectory(filedir)
@@ -89,6 +92,9 @@ Plug 'tpope/vim-surround'
 " clojure cider-nrepl
 Plug 'tpope/vim-fireplace'
 
+" golang
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
 " silver searcher
 Plug 'rking/ag.vim'
 
@@ -125,6 +131,7 @@ Plug 'artur-shaik/vim-javacomplete2'
 " neo autocomplete with tern
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
 
 " seemless tmux vim window navigation
 Plug 'christoomey/vim-tmux-navigator'
@@ -454,6 +461,12 @@ nmap <F5> :GundoToggle<CR>
 let g:vim_markdown_folding_disabled = 1
 
 "-----------------------------------------------------------------------------
+" golang settings
+"-----------------------------------------------------------------------------
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
+
+"-----------------------------------------------------------------------------
 " deoplete settings
 "-----------------------------------------------------------------------------
 let g:deoplete#enable_at_startup = 1
@@ -462,6 +475,8 @@ let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
 let g:deoplete#sources = {}
 let g:deoplete#sources._ = []
 let g:deoplete#file#enable_buffer_path = 1
+let g:deoplete#sources#go#gocode_binary = '~/go/bin/gocode'
+
 
 "-----------------------------------------------------------------------------
 " Omnicomplete settings
