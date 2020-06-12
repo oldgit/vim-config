@@ -83,9 +83,6 @@ Plug 'derekwyatt/vim-fswitch'
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/denite.nvim'
 
-" gtags support
-Plug 'jsfaint/gen_tags.vim'
-
 " clojure syntax
 Plug 'guns/vim-clojure-static'
 Plug 'guns/vim-sexp'
@@ -127,13 +124,14 @@ Plug 'mattn/emmet-vim'
 Plug 'neomake/neomake'
 
 " Java Development
+Plug 'majutsushi/tagbar'
+Plug 'sbdchd/neoformat'
 Plug 'artur-shaik/vim-javacomplete2'
 
 " neo autocomplete with tern
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
-" Plug 'dense-analysis/ale'
 
 " seemless tmux vim window navigation
 Plug 'christoomey/vim-tmux-navigator'
@@ -301,7 +299,6 @@ let g:scala_use_default_keymappings = 0
 
 " leader key
 let mapleader = ','
-let maplocalleader = ','
 
 " Wipe out all buffers
 nmap <silent> ,wa :1,9000bwipeout<cr>
@@ -480,13 +477,6 @@ let g:deoplete#sources._ = []
 let g:deoplete#file#enable_buffer_path = 1
 let g:deoplete#sources#go#gocode_binary = '~/go/bin/gocode'
 
-"-----------------------------------------------------------------------------
-" ale settings
-"-----------------------------------------------------------------------------
-let g:ale_completion_enabled = 0
-let g:ale_linters = {
-      \ 'clojure': ['clj-kondo', 'joker']
-      \}
 
 "-----------------------------------------------------------------------------
 " Omnicomplete settings
@@ -498,6 +488,7 @@ autocmd FileType groovy setlocal ts=4 sts=4 sw=4
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 " tern
 if exists('g:plugs["tern_for_vim"]')
@@ -517,6 +508,14 @@ nmap <Leader><Space>c :lclose<CR>     " close location window
 nmap <Leader><Space>, :ll<CR>         " go to current error/warning
 nmap <Leader><Space>n :lnext<CR>      " next error/warning
 nmap <Leader><Space>p :lprev<CR>      " previous error/warning
+
+"-----------------------------------------------------------------------------
+" neomake mappings
+"-----------------------------------------------------------------------------
+augroup astyle
+  autocmd!
+  autocmd BufWritePre * Neoformat
+augroup END
 
 "-----------------------------------------------------------------------------
 " Denite Settings
@@ -558,7 +557,7 @@ function! s:denite_filter_settings() abort
 endfunction
 
 " Key mapped to ctrlp
-nnoremap <C-p> :Denite -start-filter file/rec<cr>
+nnoremap <C-p> :Denite file/rec<cr>
 nmap ,ff :Denite file/rec<cr>
 nmap ,fb :Denite buffer<cr>
 nmap ,fg :Denite grep<cr>
