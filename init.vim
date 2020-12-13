@@ -177,7 +177,13 @@ let g:deoplete#enable_at_startup = 1
 "-----------------------------------------------------------------------------
 " ALE
 "-----------------------------------------------------------------------------
-let g:ale_linters = {'clojure': ['clj-kondo']}
+let g:ale_sign_error                  = '✘'
+let g:ale_sign_warning                = '⚠'
+let g:ale_linters = {
+\  'clojure': ['clj-kondo'],
+\  'markdown': ['markdownlint']
+\}
+
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
